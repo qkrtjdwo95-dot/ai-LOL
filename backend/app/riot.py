@@ -37,7 +37,7 @@ REGIONAL_HOSTS = {
 
 async def get_json(url: str):
     if not settings.riot_api_key:
-        raise HTTPException(503, "Riot API 키를 설정해 주세요. backend/.env를 확인하세요.")
+        raise HTTPException(503, "Riot API 키를 설정해 주세요. 프로젝트 루트의 .env 파일을 확인하세요.")
     async with httpx.AsyncClient(timeout=15) as client:
         response = await client.get(url, headers={"X-Riot-Token": settings.riot_api_key})
     if response.status_code == 404:
