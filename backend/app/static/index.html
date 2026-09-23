@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101116">
+  <title>LOL Archive</title>
+  <style>
+    :root{font-family:Inter,"Noto Sans KR",system-ui,sans-serif;color:#ececf2;background:#101116;font-synthesis:none;--panel:#17181f;--line:#2a2b35;--muted:#9999a7;--gold:#d5b57b;--green:#6fc39e;--red:#d97c86;--purple:#b69ae0}*{box-sizing:border-box}body{margin:0;min-width:320px;background:radial-gradient(ellipse at 70% -25%,#2b2540 0,transparent 42%),#101116}.shell{max-width:1060px;margin:auto;padding:0 28px}.topbar{height:68px;border-bottom:1px solid #24252d;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px;letter-spacing:.05em}.brand-mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#d3b375;color:#201d18}.top-right{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:11px}.status{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:20px;background:#19231e;color:#aed7bf;font-size:10px}.dot{width:7px;height:7px;border-radius:50%;background:#71c99e}.dot.off{background:#cb797e}.api-link{color:#aaa7b5;text-decoration:none}.api-link:hover{color:white}.intro{padding:42px 0 27px}.eyebrow{font:600 10px ui-monospace,monospace;letter-spacing:.16em;color:var(--gold)}h1{font-size:30px;line-height:1.35;letter-spacing:-.04em;margin:11px 0 8px}.intro p{margin:0;color:var(--muted);font-size:13px}.tabs{display:flex;gap:7px;margin-bottom:17px}.tab{border:1px solid var(--line);border-radius:7px;background:#17181f;color:#a8a8b4;padding:9px 14px;font-size:12px;cursor:pointer}.tab.active{border-color:#66563d;background:#29251e;color:#f0d49a}.panel{border:1px solid var(--line);border-radius:11px;background:#17181f;padding:19px 20px;margin-bottom:24px}.panel-title{display:flex;align-items:center;gap:10px;margin-bottom:15px}.icon{width:31px;height:31px;border-radius:9px;display:grid;place-items:center;background:#2b2637;color:var(--purple);font-size:16px}.panel-title strong{display:block;font-size:13px}.panel-title small{display:block;margin-top:3px;color:var(--muted);font-size:10px}.search-row{display:flex;gap:9px}.search-row select,.search-row input,.augment-search{height:42px;border:1px solid #353641;border-radius:7px;background:#111218;color:#e8e7ed;padding:0 12px;font:inherit;font-size:12px;outline:none}.search-row select{width:155px}.search-row input{flex:1;min-width:0}.search-row input::placeholder,.augment-search::placeholder{color:#737380}.search-row select:focus,.search-row input:focus,.augment-search:focus{border-color:#a98bcf;box-shadow:0 0 0 2px #a98bcf22}.primary{height:42px;padding:0 17px;border:0;border-radius:7px;background:var(--gold);color:#221d15;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap}.primary:disabled{opacity:.6;cursor:wait}.help-row{display:flex;justify-content:space-between;gap:12px;margin-top:10px;color:#777784;font-size:10px}.notice{display:none;margin:0 0 20px;padding:11px 13px;border-radius:7px;font-size:12px}.notice.error{display:block;color:#f2b7bc;background:#311d22;border:1px solid #5a3037}.notice.info{display:block;color:#d7cbad;background:#29251d;border:1px solid #4f4635}.result-head{display:flex;justify-content:space-between;align-items:end;margin:25px 1px 11px}.result-head h2{font-size:17px;margin:4px 0 0}.result-head small{color:var(--muted);font-size:11px}.result-list{display:grid;gap:8px}.match{display:grid;grid-template-columns:74px 42px minmax(115px,1fr) 115px minmax(80px,auto);align-items:center;gap:13px;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:8px;background:#17181f;padding:11px 14px}.match:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green)}.match.loss:before{background:var(--red)}.outcome strong,.outcome small,.champion strong,.champion small,.kda strong,.kda small{display:block}.outcome strong{font-size:11px;color:var(--green)}.loss .outcome strong{color:var(--red)}.outcome small,.champion small,.kda small{margin-top:4px;color:var(--muted);font-size:9px}.champ-icon{position:relative;overflow:hidden;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#342b3c;border:1px solid #4d4058;color:#e5cbe8;font-size:17px;font-weight:700}.champ-icon img,.teammate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.champion strong{font-size:12px}.kda{text-align:center}.kda strong{font:600 12px ui-monospace,monospace}.kda .deaths{color:#e99da3}.teammates{display:flex;gap:4px;justify-content:end}.teammate{position:relative;overflow:hidden;display:grid;place-items:center;width:22px;height:22px;border-radius:6px;background:#292a33;color:#c0bfca;font-size:9px}.loading{text-align:center;color:var(--muted);padding:22px;font-size:12px}.hidden{display:none!important}.augment-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.augment-head h2{margin:0;font-size:15px}.count{color:var(--muted);font:10px ui-monospace,monospace}.augment-search{width:100%;margin-bottom:13px}.filters{display:flex;gap:6px;margin-bottom:12px}.filter{border:1px solid #34343e;border-radius:6px;background:#1b1c23;color:#aaa9b4;padding:6px 10px;font-size:10px;cursor:pointer}.filter.active{border-color:#5d4b32;background:#2d271e;color:#efd59f}.augment-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.augment-card{border:1px solid #30313b;border-radius:8px;background:#1c1d24;padding:13px}.augment-card-top{display:flex;justify-content:space-between;align-items:center}.augment-icon{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#30263a;color:#cfade4}.tier{padding:3px 6px;border:1px solid #4d493f;border-radius:5px;color:#d3c8a7;font-size:9px}.tier-골드{border-color:#625034;color:#e2bd7d}.tier-프리즘{border-color:#58416c;color:#d8afea}.augment-card h3{font-size:12px;margin:12px 0 6px}.augment-card p{font-size:11px;line-height:1.6;color:#a5a4b0;margin:0}.empty{min-height:185px;border:1px dashed #383944;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;color:var(--muted)}.empty-icon{font-size:23px;color:#bba0db}.empty strong{font-size:12px;color:#dad8e1;margin:10px 0 5px}.empty p{font-size:11px;line-height:1.6;margin:0}.foot{padding:20px 0 28px;border-top:1px solid #25262e;color:#777784;font-size:10px;display:flex;justify-content:space-between;gap:12px}.foot a{color:#9b99a5;text-decoration:none}@media(max-width:660px){.shell{padding:0 15px}.intro{padding-top:32px}.intro h1{font-size:25px}.search-row{flex-wrap:wrap}.search-row select{width:100%}.search-row input{flex-basis:calc(100% - 110px)}.search-row .primary{flex:1}.match{grid-template-columns:52px 36px minmax(90px,1fr) 78px;gap:8px;padding:10px}.champ-icon{width:34px;height:34px}.teammates{display:none}.augment-grid{grid-template-columns:1fr}.foot{flex-direction:column}}
+  </style>
+  <style>
+    .match{display:block;padding:0}.match-summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:74px 42px minmax(115px,1fr) 115px minmax(80px,auto) 18px;align-items:center;gap:13px;padding:11px 14px}.match-summary::-webkit-details-marker{display:none}.match-summary::marker{content:""}.match-summary::after{content:"⌄";color:#aaa8b5;font-size:14px;text-align:center}.match[open] .match-summary::after{content:"⌃"}.match[open] .match-summary{border-bottom:1px solid var(--line)}.match-details{padding:14px 18px 16px 102px;background:#14151b}.detail-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}.detail-heading strong{font-size:11px}.detail-heading small{color:var(--muted);font-size:10px}.item-build{display:flex;flex-wrap:wrap;gap:9px}.item-card{width:66px;text-align:center;color:#d6d4de;font-size:9px;line-height:1.35}.item-card img,.item-placeholder{width:48px;height:48px;display:grid;place-items:center;margin:0 auto 5px;border:1px solid #4c4655;border-radius:8px;background:#28242f;object-fit:cover;color:#dec6eb;font-size:16px}.item-card span:last-child{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.item-empty{color:var(--muted);font-size:10px}.match-detail-note{margin-top:12px;padding-top:9px;border-top:1px solid #2a2b35;color:var(--muted);font-size:10px}.match-detail-note b{color:#d0ced7;font-weight:600}@media(max-width:660px){.match-summary{grid-template-columns:52px 36px minmax(90px,1fr) 78px 16px;gap:8px;padding:10px}.match-details{padding:12px}.item-build{gap:5px}.item-card{width:58px}.item-card img,.item-placeholder{width:42px;height:42px}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">⚔</span><span>LOL ARCHIVE</span></div>
+      <div class="top-right"><span class="status"><i class="dot off" id="health-dot"></i><span id="health-text">서버 확인 중</span></span><a class="api-link" href="/docs">API 문서 ↗</a></div>
+    </header>
+    <main>
+      <section class="intro"><div class="eyebrow">LEAGUE OF LEGENDS · API PLAYGROUND</div><h1>전적과 증강 정보를<br>한 곳에서 확인하세요.</h1><p>현재 서버에서 사용할 수 있는 기능을 간단히 살펴보는 화면입니다.</p></section>
+      <nav class="tabs" aria-label="기능 선택"><button class="tab active" data-view="matches">⚔ 전적 검색</button><button class="tab" data-view="augments">✦ 증강 도감</button></nav>
+
+      <section id="matches-view">
+        <form class="panel" id="search-form">
+          <div class="panel-title"><span class="icon">⌕</span><div><strong>소환사 전적 검색</strong><small>Riot ID와 태그를 입력해 최근 경기를 조회합니다.</small></div></div>
+          <div class="search-row">
+            <select id="region" aria-label="서버"><option value="kr">한국 (KR)</option><option value="jp1">일본 (JP)</option><option value="na1">북미 (NA)</option><option value="euw1">서유럽 (EUW)</option><option value="eun1">북유럽 (EUNE)</option><option value="br1">브라질 (BR)</option><option value="la1">라틴 아메리카 북부 (LAN)</option><option value="la2">라틴 아메리카 남부 (LAS)</option><option value="oc1">오세아니아 (OCE)</option><option value="tr1">튀르키예 (TR)</option><option value="ru">러시아 (RU)</option><option value="ph2">필리핀 (PH)</option><option value="sg2">싱가포르 (SG)</option><option value="th2">태국 (TH)</option><option value="tw2">대만 (TW)</option><option value="vn2">베트남 (VN)</option></select>
+            <input id="riot-id" placeholder="소환사 이름#태그 (예: Hide on bush#KR1)" autocomplete="off" required>
+            <button class="primary" id="search-button" type="submit">전적 검색</button>
+          </div>
+          <div class="help-row"><span>Riot ID는 이름#태그 형식으로 입력해 주세요.</span><span>최근 10경기</span></div>
+        </form>
+        <div id="message" class="notice" role="status"></div>
+        <section id="results" class="hidden">
+          <div class="result-head"><div><div class="eyebrow">MATCH HISTORY</div><h2 id="account-name"></h2></div><small id="win-summary"></small></div>
+          <div id="match-list" class="result-list"></div>
+        </section>
+      </section>
+
+      <section id="augments-view" class="hidden">
+        <div class="panel">
+          <div class="augment-head"><h2>아수라장 증강 도감</h2><span class="count" id="augment-count">0 ITEMS</span></div>
+          <input class="augment-search" id="augment-search" placeholder="증강 이름 또는 설명 검색">
+          <div class="filters"> <button class="filter active" data-tier="">전체</button><button class="filter" data-tier="실버">실버</button><button class="filter" data-tier="골드">골드</button><button class="filter" data-tier="프리즘">프리즘</button></div>
+          <div id="augment-grid" class="augment-grid"></div>
+          <div id="augment-empty" class="empty"><span class="empty-icon">✦</span><strong>증강 데이터가 아직 비어 있어요</strong><p>증강 정보는 Riot API에서 제공되지 않아<br>확인된 항목을 별도 카탈로그로 추가해야 합니다.</p></div>
+        </div>
+      </section>
+    </main>
+    <footer class="foot"><span>LOL ARCHIVE · 개인 개발 프로젝트</span><span>Riot Games와 제휴·승인된 서비스가 아닙니다. · <a href="https://developer.riotgames.com/policies/general" target="_blank" rel="noreferrer">Riot 정책</a></span></footer>
+  </div>
+  <script>
+    const $ = (selector) => document.querySelector(selector)
+    const message = $('#message')
+    let currentTier = ''
+    const esc = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))
+
+    async function checkHealth() {
+      const dot = $('#health-dot')
+      try {
+        const response = await fetch('/api/health')
+        if (!response.ok) throw new Error()
+        dot.classList.remove('off')
+        $('#health-text').textContent = 'FastAPI 연결됨'
+      } catch {
+        dot.classList.add('off')
+        $('#health-text').textContent = '서버 연결 실패'
+      }
+    }
+
+    document.querySelectorAll('.tab').forEach(button => button.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab === button))
+      $('#matches-view').classList.toggle('hidden', button.dataset.view !== 'matches')
+      $('#augments-view').classList.toggle('hidden', button.dataset.view !== 'augments')
+      if (button.dataset.view === 'augments') loadAugments()
+    }))
+
+    $('#search-form').addEventListener('submit', async event => {
+      event.preventDefault()
+      const riotId = $('#riot-id').value.trim()
+      const region = $('#region').value
+      if (!riotId.includes('#') || !riotId.split('#')[0] || !riotId.split('#').at(-1)) {
+        message.className = 'notice error'
+        message.textContent = 'Riot ID를 이름#태그 형식으로 입력해 주세요.'
+        return
+      }
+      const button = $('#search-button')
+      button.disabled = true
+      button.textContent = '조회 중…'
+      message.className = 'notice'
+      $('#results').classList.add('hidden')
+      try {
+        const response = await fetch(`/api/summoners/${region}/${encodeURIComponent(riotId)}/matches?count=10`)
+        const data = await response.json()
+        if (!response.ok) throw new Error(data.detail || '전적을 불러오지 못했습니다.')
+        renderMatches(data)
+      } catch (error) {
+        message.className = 'notice error'
+        message.textContent = error instanceof Error ? error.message : '전적을 불러오지 못했습니다.'
+      } finally {
+        button.disabled = false
+        button.textContent = '전적 검색'
+      }
+    })
+
+    function renderMatches(data) {
+      const matches = data.matches || []
+      const wins = matches.filter(match => match.win).length
+      $('#account-name').textContent = `${data.account.game_name}#${data.account.tag_line}`
+      $('#win-summary').textContent = `${matches.length}게임 · ${wins}승 ${matches.length - wins}패${matches.length ? ` · 승률 ${Math.round(wins / matches.length * 100)}%` : ''}`
+      $('#match-list').innerHTML = matches.map(match => {
+        const start = match.game_start ? new Date(match.game_start).toLocaleDateString('ko-KR', {month:'short',day:'numeric'}) : ''
+        const duration = `${Math.floor((match.duration || 0) / 60)}:${String((match.duration || 0) % 60).padStart(2,'0')}`
+        const queue = match.queue_id === 450 ? '칼바람 나락' : (match.game_mode || '게임').replaceAll('_',' ')
+        const teammateHtml = (match.participants || []).slice(0,5).map(player => { const name = player.champion_ko || player.champion || '?'; const image = player.champion_icon ? `<img src="${esc(player.champion_icon)}" alt="" loading="lazy" onerror="this.remove()">` : ''; return `<span class="teammate" title="${esc(player.name)}#${esc(player.tag)} · ${esc(name)}">${esc(name[0])}${image}</span>` }).join('')
+        const championName = match.champion_ko || match.champion || '알 수 없음'
+        const portrait = match.champion_icon ? `<img src="${esc(match.champion_icon)}" alt="${esc(championName)}" loading="lazy" onerror="this.remove()">` : ''
+        const items = match.item_details || []
+        const itemTiles = items.length ? items.map(item => {
+          const icon = item.icon ? `<img src="${esc(item.icon)}" alt="${esc(item.name)}" loading="lazy" onerror="this.remove()">` : `<span class="item-placeholder">${esc((item.name || '?')[0])}</span>`
+          return `<div class="item-card" title="${esc(item.name)}${item.description ? ` — ${esc(item.description)}` : ''}">${icon}<span>${esc(item.name)}</span></div>`
+        }).join('') : '<div class="item-empty">이 경기에서 표시할 구매 아이템이 없습니다.</div>'
+        return `<details class="match ${match.win ? '' : 'loss'}"><summary class="match-summary"><span class="outcome"><strong>${match.win ? '승리' : '패배'}</strong><small>${esc(queue)}</small></span><span class="champ-icon">${esc(championName[0])}${portrait}</span><span class="champion"><strong>${esc(championName)}</strong><small>${esc(start)} · ${duration}</small></span><span class="kda"><strong>${match.kills ?? 0}<span> / </span><span class="deaths">${match.deaths ?? 0}</span><span> / </span>${match.assists ?? 0}</strong><small>K / D / A</small></span><span class="teammates">${teammateHtml}</span></summary><div class="match-details"><div class="detail-heading"><strong>구매 아이템</strong><small>${items.length}개 · 아이콘에 마우스를 올리면 설명을 볼 수 있어요</small></div><div class="item-build">${itemTiles}</div><div class="match-detail-note">게임 모드 <b>${esc(queue)}</b>　·　결과 <b>${match.win ? '승리' : '패배'}</b>　·　K / D / A <b>${match.kills ?? 0} / ${match.deaths ?? 0} / ${match.assists ?? 0}</b></div></div></details>`
+      }).join('')
+      $('#results').classList.remove('hidden')
+      message.className = 'notice'
+      if (!matches.length) {
+        message.className = 'notice info'
+        message.textContent = '최근 경기 기록이 없습니다.'
+      }
+    }
+
+    async function loadAugments() {
+      const params = new URLSearchParams()
+      const query = $('#augment-search').value.trim()
+      if (query) params.set('q', query)
+      if (currentTier) params.set('tier', currentTier)
+      try {
+        const response = await fetch(`/api/augments?${params}`)
+        const data = await response.json()
+        const items = data.items || []
+        $('#augment-count').textContent = `${items.length} ITEMS`
+        $('#augment-grid').innerHTML = items.map(item => `<article class="augment-card"><div class="augment-card-top"><span class="augment-icon">✦</span><span class="tier tier-${esc(item.tier || '')}">${esc(item.tier || '증강')}</span></div><h3>${esc(item.name)}</h3><p>${esc(item.description)}</p></article>`).join('')
+        $('#augment-empty').classList.toggle('hidden', items.length > 0)
+      } catch {
+        $('#augment-count').textContent = '오류'
+      }
+    }
+
+    document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => {
+      document.querySelectorAll('.filter').forEach(filter => filter.classList.toggle('active', filter === button))
+      currentTier = button.dataset.tier || ''
+      loadAugments()
+    }))
+    $('#augment-search').addEventListener('input', loadAugments)
+    checkHealth()
+  </script>
+</body>
+</html>
