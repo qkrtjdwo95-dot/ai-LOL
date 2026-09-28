@@ -38,8 +38,11 @@ REGIONAL_HOSTS = {
 async def get_json(url: str):
     if not settings.riot_api_key:
         raise HTTPException(503, "Riot API 키를 설정해 주세요. 프로젝트 루트의 .env 파일을 확인하세요.")
-    async with httpx.AsyncClient(timeout=15) as client:
-        response = await client.get(url, headers={"X-Riot-Token": settings.riot_api_key})
+    try:
+        async with httpx.AsyncClient(timeout=15) as client:
+            response = await client.get(url, headers={"X-Riot-Token": settings.riot_api_key})
+    except httpx.RequestError as exc:
+        raise HTTPException(503, "Riot API 서버에 연결할 수 없습니다. 인터넷 연결 또는 방화벽 설정을 확인해 주세요.") from exc
     if response.status_code == 404:
         raise HTTPException(404, "소환사 또는 경기 기록을 찾을 수 없습니다.")
     if response.status_code == 403:
