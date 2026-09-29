@@ -17,18 +17,21 @@ Riot ID로 리그 오브 레전드 전적을 조회하고, 경기별 아이템 �
 - `/docs`에는 Swagger 대화형 API 문서가 있습니다.
 - Riot ID의 `게임이름#태그`를 받는 `ACCOUNT-V1` 계정 조회를 연결했습니다.
 - `MATCH-V5`로 최근 경기 ID와 경기 상세 데이터를 가져옵니다.
+- `TFT-MATCH-V1`로 같은 Riot ID의 TFT 경기, 배치, 기물, 특성, 증강 정보를 조회합니다. TFT도 기존 `ACCOUNT-V1` 계정 조회와 `.env` API 키를 재사용합니다.
+- TFT 기물/아이템/특성/증강 이름과 아이콘은 한국어 Data Dragon 데이터를 사용하며, 로딩이 안 될 때는 원래 ID를 표시합니다.
 - 지역 코드(KR, JP, NA, EUW 등)와 Riot의 지역 라우팅을 분리했습니다.
 - 경기 목록에서 한 경기를 누르면 해당 소환사의 K/D/A와 구매 아이템이 아래에 펼쳐집니다.
 - 챔피언과 아이템의 한국어 이름 및 아이콘은 Data Dragon의 `ko_KR` 데이터를 사용합니다. Data Dragon 데이터를 불러오지 못하면 이름은 Riot 경기 응답의 영문으로 대체되고 아이콘은 생략될 수 있습니다.
 - Riot API 403, 404, 429 오류를 사용자에게 설명하는 응답으로 변환합니다.
 - `.env`에서 Riot API 키를 읽습니다. 키를 코드나 프론트 파일에 넣지 않습니다.
-- 증강 API는 `backend/app/data/augments.json` 파일을 읽으며 검색어와 등급 필터를 지원합니다.
+- 증강 API는 `backend/app/data/augments.json` 파일을 읽으며 한국어/영어 이름·설명 검색과 등급 필터를 지원합니다.
 
 ## 의도적으로 아직 하지 않은 것
 
 - PostgreSQL 접속, 경기 캐시, 검색 기록 저장은 보류했습니다. 현재 앱은 DB 없이 시작해야 합니다. `DATABASE_URL`이 기존 `.env`에 남아 있어도 현재 설정에서 사용하지 않습니다.
 - `frontend/`의 React/Vite 코드는 만들어 둔 초기 스캐폴드입니다. 지금 기본 화면은 React가 아니라 `backend/app/static/index.html`에서 FastAPI가 직접 제공합니다.
-- 아수라장 증강 목록은 비어 있습니다. Riot의 LoL API에서 이 모드의 전체 증강 도감을 받는 경로를 사용하지 않습니다. TFT 증강 데이터를 LoL 아수라장 증강처럼 재사용하지 않습니다.
+- 아수라장 증강 도감은 `backend/app/data/augments.json`에서 관리합니다. 2026-09-29 기준 공개된 Patch 26.19 활성 목록 195개(실버 56, 골드 72, 프리즘 67)를 채웠습니다. Riot의 LoL API에는 전체 도감 API가 없으며, TFT 증강과 분리된 자료입니다.
+- 각 항목에는 한국어/영어 이름, 등급, 출처 패치 및 링크를 기록하고 Patch 26.19 통계 상위 챔피언 6개를 추천으로 연결합니다. 효과 설명 192개는 Patch 26.17 한국어 공개 자료에서 가져왔고, Patch 26.18의 Spin To Win 변경을 반영했습니다. 설명이 확인되지 않은 3개는 미확인 상태로 표시합니다. 일부 설명에는 게임 내 수치 자리표시자가 남아 있어 최신 패치에서 다시 대조해야 합니다.
 - 경기별 참가자 정보는 응답에 있지만, 상세 화면에는 현재 검색한 소환사의 구매 아이템만 표시합니다.
 - 아수라장 경기만 걸러내는 큐 분류와 필터는 아직 추가하지 않았습니다.
 
@@ -64,16 +67,18 @@ cd D:\SourceBank\ai-LOL\backend
 | `GET /api/regions` | 지원 지역 코드 목록 |
 | `GET /api/augments?q=&tier=` | 로컬 증강 JSON 검색 |
 | `GET /api/summoners/{region}/{riot_id}/matches?count=10` | Riot ID의 최근 경기 조회. Riot ID는 `이름#태그` 형식 |
+| `GET /api/tft/{region}/{riot_id}/matches?count=10` | Riot ID의 최근 TFT 경기와 사용 조합 조회 |
 
 경기 응답에는 영문 챔피언 ID 이름, 한국어 표시명, 챔피언 아이콘, 7개 아이템 슬롯 ID 및 비어 있지 않은 아이템의 한국어 이름·설명·아이콘이 들어갑니다.
 
 ## 주요 파일
 
-- `backend/app/main.py` — 화면 라우트, 상태/증강/전적 API
-- `backend/app/riot.py` — Riot API 키 처리, 엔드포인트 및 지역 라우팅
-- `backend/app/data_dragon.py` — Data Dragon에서 최신 버전의 한국어 챔피언/아이템 데이터 로드
-- `backend/app/static/index.html` — 기본 화면과 경기별 확장 아이템 목록
-- `backend/app/data/augments.json` — 수동 관리하는 증강 도감 데이터(현재 빈 배열)
+- `backend/app/main.py` — 화면 라우트, 상태/증강/LoL/TFT 전적 API
+- `backend/app/riot.py` — Riot API 키 처리, LoL/TFT 엔드포인트 및 지역 라우팅
+- `backend/app/data_dragon.py` — Data Dragon에서 한국어 LoL/TFT 이름 및 아이콘 로드
+- `backend/app/static/index.html` — LoL/TFT 검색 전환, 상세 경기 정보, 증강 도감 화면
+- `backend/app/data/augments.json` — 아수라장 증강 도감 195개(목록 26.19, 설명 출처 패치 별도 기록)
+- `backend/scripts/sync_mayhem_augments.py` — 공개 증강 목록/설명 HTML로 도감 JSON을 갱신하는 스크립트
 - `backend/app/config.py` — 설정. `.env`는 저장소 최상위에서 읽습니다.
 - `backend/requirements.txt` — 현재 DB 없이 실행하는 Python 의존성
 - `frontend/` — 추후 UI를 다시 결정할 때 참고할 React/Vite 초기 파일
@@ -89,9 +94,8 @@ cd D:\SourceBank\ai-LOL\backend
 
 ### 우선 순위 2 — 아수라장 증강 도감
 
-- 공식 인게임에서 검증한 증강 정보를 `augments.json` 형식으로 추가합니다.
-- 증강 데이터 필드(이름, 설명, 등급, 효과 유형, 패치/출처)를 확정하고, 패치별 변경 관리 방식을 정합니다.
-- 확인되지 않은 효과 수치나 등급을 임의로 작성하지 않습니다.
+- Patch 26.19 라이브 목록과 최신 효과 설명을 대조해 데이터 차이를 보완합니다. 현재 3개 항목은 설명을 확인하지 못했고, 일부 수치가 `?`로 생략된 설명도 있습니다.
+- 패치마다 라이브 목록, 등급, 효과 설명을 대조하고 출처/패치 메타데이터를 갱신합니다.
 
 ### 우선 순위 3 — 지속성 및 정식 프론트엔드
 

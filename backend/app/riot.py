@@ -45,8 +45,8 @@ async def get_json(url: str):
         raise HTTPException(503, "Riot API 서버에 연결할 수 없습니다. 인터넷 연결 또는 방화벽 설정을 확인해 주세요.") from exc
     if response.status_code == 404:
         raise HTTPException(404, "소환사 또는 경기 기록을 찾을 수 없습니다.")
-    if response.status_code == 403:
-        raise HTTPException(502, "Riot API 키가 유효하지 않거나 권한이 없습니다.")
+    if response.status_code in (401, 403):
+        raise HTTPException(502, "Riot API 키가 만료되었거나 유효하지 않습니다. 개발자 포털에서 갱신해 주세요.")
     if response.status_code == 429:
         raise HTTPException(429, "Riot API 요청 한도에 도달했습니다. 잠시 후 다시 시도해 주세요.")
     if response.is_error:
@@ -68,3 +68,15 @@ async def match_ids(region: str, puuid: str, count: int):
 async def match_by_id(region: str, match_id: str):
     host = REGIONAL_HOSTS[region]
     return await get_json(f"https://{host}/lol/match/v5/matches/{quote(match_id, safe='')}")
+
+
+async def tft_match_ids(region: str, puuid: str, count: int):
+    host = REGIONAL_HOSTS[region]
+    return await get_json(
+        f"https://{host}/tft/match/v1/matches/by-puuid/{quote(puuid, safe='')}/ids?start=0&count={count}"
+    )
+
+
+async def tft_match_by_id(region: str, match_id: str):
+    host = REGIONAL_HOSTS[region]
+    return await get_json(f"https://{host}/tft/match/v1/matches/{quote(match_id, safe='')}")
